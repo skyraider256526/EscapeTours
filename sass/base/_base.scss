@@ -1,0 +1,22 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  //this is percent so that user can change the size
+  //this is the 1rem, 10/16=0.625
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  color: $color-dark-grey;
+  padding: 3rem;
+  box-sizing: border-box;
+}

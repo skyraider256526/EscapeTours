@@ -1,0 +1,38 @@
+.section-about{
+  background-color: $color-grey-light-1;
+  padding: 25rem 0;
+  margin-top: -20vh;
+}
+
+.section-feature{
+  padding: 20rem 0;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba($color-primary-light, 0.8),
+      rgba($color-primary-dark, 0.8)
+    ),
+    url(../img/nat-4.jpg);
+    background-size: cover;
+    //negative margin is applied to cover the white space which is left due to skew look carefully it is hard to notice
+  margin-top: -8rem;
+
+    // we introduce the cut edge using transfrm we could do the same with clip path too
+    transform: skewY(-7deg);
+    //we use opposite skew to negate the effect of above skew
+    // NOTE: if we had skewed the everything inside section using "& *" then the col-1-of-4 will also get skewed try uncommenting the below
+    // & *{
+
+    //   transform: skewY(7deg);
+    // }
+
+    // and comment this
+    & > *{
+      transform: skewY(7deg);
+    }
+}
+
+.section-tours{
+  padding: 25rem 0 50rem 0;
+  background-color: $color-grey-light-1;
+  margin-top: -6rem;
+}
