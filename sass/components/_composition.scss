@@ -1,28 +1,47 @@
-.composition{
+.composition {
   position: relative;
   // thought of including clearfix
   @include clearfix;
-  &__photo{
+  &__photo {
     width: 55%;
-    box-shadow: 0 2.5rem 4rem rgba($color-black,.4);
+    box-shadow: 0 2.5rem 4rem rgba($color-black, 0.4);
     border-radius: 2px;
     position: absolute;
     z-index: 10;
-    transition: all .3s;
-
-    &--p1{
+    transition: all 0.3s;
+    @include respond(tab-port) {
+      //we are floating them left and removing their left, right, and top
+      position: relative;
+      float: left;
+      width: 33.33%;
+    }
+    &--p1 {
       left: 0;
       top: -2rem;
+      @include respond(tab-port) {
+        top: 0;
+        transform: scale(1.2);
+      }
     }
-    &--p2{
+    &--p2 {
       right: 0;
       top: 2rem;
+      @include respond(tab-port) {
+        top: -1rem;
+        transform: scale(1.3);
+        z-index: 11;
+      }
     }
-    &--p3{
+    &--p3 {
       left: 20%;
       top: 10rem;
+      @include respond(tab-port) {
+        top: 1rem;
+        left: 0;
+        transform: scale(1.1);
+      }
     }
-    &:hover{
+    &:hover {
       // outline is different than border such that it is above border
       z-index: 20;
       outline: 1.5rem solid $color-primary;
@@ -31,12 +50,12 @@
       //NOTE: in video it was in composition__photo but including it here applies transition to offset TOO.
       outline-offset: 2rem;
       transform: scale(1.05);
-      box-shadow: 0 2.5rem 4rem rgba($color-black,.5);
+      box-shadow: 0 2.5rem 4rem rgba($color-black, 0.5);
     }
   }
   //as the user enter teh composition element it scales down any photo which is not hovered
   //NOTE: hover on an div element only works if you hover on any of its element
-  &:hover &__photo:not(:hover){
-    transform: scale(.9);
+  &:hover &__photo:not(:hover) {
+    transform: scale(0.9);
   }
 }

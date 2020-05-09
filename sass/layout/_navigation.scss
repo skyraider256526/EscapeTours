@@ -1,0 +1,256 @@
+.navigation {
+  &__checkbox {
+    display: none;
+  }
+  &__button {
+    cursor: pointer;
+    background-color: $color-white;
+    height: 7rem;
+    width: 7rem;
+    position: fixed;
+    top: 6rem;
+    right: 6rem;
+
+    @include respond(tab-port) {
+      // height: 5rem;
+      // width: 5rem;
+      top: 4rem;
+      right: 4rem;
+    }
+    @include respond(phone) {
+      // height: 5rem;
+      // width: 5rem;
+      top: 3rem;
+      right: 3rem;
+    }
+    border-radius: 50%;
+    z-index: 2000;
+    box-shadow: 0 1rem 3rem rgba($color: $color-black, $alpha: 0.1);
+  }
+
+  &__toggle {
+  }
+  &__background {
+    height: 6rem;
+    width: 6rem;
+    border-radius: 50%;
+    position: fixed;
+    top: 6.5rem;
+    right: 6.5rem;
+    @include respond(tab-port) {
+      top: 4.5rem;
+      right: 4.5rem;
+    }
+    @include respond(phone) {
+      top: 3.5rem;
+      right: 3.5rem;
+      // height: 3rem;
+      // width: 3rem;
+    }
+
+    // radial-gradient gives the color form middle to border
+    background-image: radial-gradient(
+      $color-primary-light,
+      $color-primary-dark
+    );
+
+    // we are specifying how much time it takes to transform the background
+    transition: transform 0.8s cubic-bezier(0.83, 0, 0.17, 1);
+    z-index: 1000;
+  }
+  &__nav {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1500;
+
+    opacity: 0;
+    width: 0;
+
+    // if we dont transition the opacity then we dont get an nice effect when we click the menu.... try to disable it and see how the opacity becomes instantly 1
+    // and we are using all to animate the width too
+    transition: all 0.8s cubic-bezier(0.83, 0, 0.17, 1);
+    /* 
+    my solution for collapsing and filling the nav
+    width: 100vw;
+    display: none; 
+    */
+  }
+  &__list {
+    /* while nav is hidden the list wont be generatd, even though we have kept the width of nav element to zero the list isn't
+    display: none; */
+    counter-reset: nav;
+    text-align: center;
+    list-style: none;
+    @include centre-absolute;
+    // this width is importnat becsuse during transformaion the links arent in same line
+    width: 100%;
+  }
+  &__item {
+    margin: 1rem;
+    width: 100%;
+    // my solution
+    // &::after {
+    //   background-color: $color-white;
+    // }
+    // position: relative;
+    // overflow: hidden;
+    // &:hover .navigation__animation {
+    //   background-color: $color-white;
+    //   transform: scaleX(1000);
+    // }
+  }
+  &__link {
+    &::before {
+      counter-increment: nav;
+      content: counter(nav, decimal-leading-zero);
+      font-size: 3rem;
+      color: $color-white;
+      padding-right: 1.5rem;
+    }
+    &:link,
+    &:visited {
+      display: inline-block;
+      text-decoration: none;
+      font-size: 3rem;
+      font-weight: 300;
+      color: $color-white;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      // this is my edition to make all the link clickable and its cursor to be default
+      pointer-events: none;
+      cursor: default;
+      // we are using solid-gradients and incresing its width till only the transparent is visible
+      background-image: linear-gradient(
+        120deg,
+        transparent 0%,
+        transparent 50%,
+        $color-white 50%
+      );
+      // width is increased by background-size
+      // NOTE: now the image is 200% bigger so the 100% which is visible in the link is the transparent color( left 100%), and the white color part(right 100%) is outside now please see the hover note
+      // due to browser issues we had to take 220%
+      background-size: 226%;
+      transition: all 0.4s;
+    }
+
+    &:hover,
+    &:active {
+      // NOTE: now the background-position will align the pixel of the background, which is the end of white part, to the 100% or end of the link element
+      background-position: 100%;
+      color: $color-primary;
+      transform: translateX(1rem);
+    }
+  }
+
+  /* my solution
+  &__link {
+    text-decoration: none;
+    font-size: 3rem;
+    font-weight: 300;
+    color: $color-white;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+
+    z-index: 1;
+    color: $color-primary-dark;
+    position: relative;
+  } */
+
+  // my solution
+  // &__animation {
+  //   clip-path: polygon(25% 0, 100% 0%, 100% 100%, 0% 100%);
+  //   width: 1px;
+  //   display: inline-block;
+  //   background-color: transparent;
+  //   height: 100%;
+  //   position: relative;
+  //   position: absolute;
+  //   top: 0;
+  //   right: 0;
+  //   transition: all 0.3s;
+  // }
+  &__checkbox:checked ~ &__background {
+    transform: scale(50);
+  }
+
+  &__checkbox:checked ~ &__nav {
+    opacity: 1;
+    width: 100%;
+
+    // this is my edition to make all the link clickable and its cursor to be default
+    & a {
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    /* 
+    i am introducing this to not generate the list, if you comment this and display: none of list the list will occupy some space in the left side of the page
+      & > ul {
+        display: block;
+      }
+    my solution for collapsing and filling the nav
+    display: block;
+   */
+  }
+
+  // &__checkbox:checked
+
+  // ICON
+  &__icon {
+    position: relative;
+    margin-top: 3.5rem;
+    // @include respond(tab-port) {
+    //   margin-top: 2.5rem;
+    // }
+    &,
+    &::after,
+    &::before {
+      width: 3rem;
+      height: 2px;
+      background-color: $color-dark-grey-3;
+      display: inline-block;
+    }
+    &::after,
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      transition: all 0.2s;
+      transform-origin: center;
+    }
+
+    &::before {
+      top: -0.8rem;
+    }
+    &::after {
+      top: 0.8rem;
+    }
+  }
+
+  &__button:hover &__icon {
+    &::before {
+      top: -1rem;
+    }
+    &::after {
+      top: 1rem;
+    }
+  }
+
+  &__checkbox:checked + &__button &__icon {
+    & {
+      transition: all 0.2s;
+      background-color: transparent;
+    }
+    &::after,
+    &::before {
+      top: 0;
+    }
+    &::after {
+      transform: rotate(135deg);
+    }
+    &::before {
+      transform: rotate(-135deg);
+    }
+  }
+}
